@@ -1,6 +1,7 @@
-CC=gcc
+CC=clang
 
-CFLAGS=-g -Wall -lm
+CFLAGS=-g -Wall
+LINKER_FLAGS=-lstdc++
 LIBS=src
 CODEDIRS=. $(foreach D,$(LIBS), $(wildcard $(D)/*))
 CFILES=$(foreach D,$(CODEDIRS),$(wildcard $(D)/*.cpp))
@@ -10,7 +11,7 @@ BINARY=bin
 all:$(BINARY)
 
 $(BINARY):$(OBJECTS)
-	$(CC) $(CFLAGS) $^ -o $@
+	$(CC) $(LINKER_FLAGS) $(CFLAGS) $^ -o $@
 
 %.o:%.cpp
 	$(CC) $(CFLAGS) -c $^ -o $@
