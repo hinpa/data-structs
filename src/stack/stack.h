@@ -35,7 +35,6 @@ Stack<Type>::Stack(const Stack &copy)
 {
     *this = copy;
 }
-// stack_int = stack_int_2.
 template<typename Type>
 Stack<Type>& Stack<Type>::operator=(const Stack &copy)
 {
@@ -49,32 +48,27 @@ Stack<Type>& Stack<Type>::operator=(const Stack &copy)
     Node *copy_iterator = copy.HEAD;
     Node *it = HEAD;
     size = copy.size;
-    // copy until we meet last element of either stack that being copied
-    // or stack that we are copying into
     while (it->next && copy_iterator->next)
     {
         it->data = copy_iterator->data;
         it = it->next;
         copy_iterator = copy_iterator->next;
     }
-    // last element is yet to be copied
     it->data = copy_iterator->data;
     copy_iterator = copy_iterator->next;
     Node *free_it = it->next;
-    // in case there's nothing left to copy
     while (free_it)
     {
         Node *delem = free_it;
         free_it = free_it->next;
         delete delem;
     }
-    // in case there's still something to copy
     while (copy_iterator)
     {
-        it->next = new Node; // alloc new node
-        it = it->next; // move to it
-        it->data = copy_iterator->data; // copy 
-        copy_iterator = copy_iterator->next; // move next
+        it->next = new Node;
+        it = it->next; 
+        it->data = copy_iterator->data;
+        copy_iterator = copy_iterator->next;
     }
     it->next = NULL;
     return *this;
