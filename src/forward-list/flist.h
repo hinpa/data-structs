@@ -14,7 +14,6 @@ class FList {
     };
 
     Node *HEAD = NULL;
-    Node *TAIL = NULL;
     size_t size = 0;
 
 public:
