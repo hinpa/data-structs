@@ -2,18 +2,14 @@
 #define HINPA_FLIST_H
 #include <cstddef>
 #include <iostream>
+#include "../Nodes/node.h"
 // Necessary functions:
 // Top(), push(), Insert, Push_back(),Delete(),Pop_back(), Pop_front()
 
 
 template<typename Type>
 class FList {
-    struct Node {
-        Type data;
-        Node *next;
-    };
-
-    Node *HEAD = NULL;
+    Node<Type> *HEAD = NULL;
     size_t size = 0;
 
 public:
@@ -49,9 +45,9 @@ FList<Type>& FList<Type>::operator=(const FList &copy)
         return *this;
     }
     if (HEAD == NULL)
-        HEAD = new Node;
-    Node *copy_iterator = copy.HEAD;
-    Node *it = HEAD;
+        HEAD = new Node<Type>;
+    Node<Type> *copy_iterator = copy.HEAD;
+    Node<Type> *it = HEAD;
     size = copy.size;
     while (it->next && copy_iterator->next)
     {
@@ -61,16 +57,16 @@ FList<Type>& FList<Type>::operator=(const FList &copy)
     }
     it->data = copy_iterator->data;
     copy_iterator = copy_iterator->next;
-    Node *free_it = it->next;
+    Node<Type> *free_it = it->next;
     while (free_it)
     {
-        Node *delem = free_it;
+        Node<Type> *delem = free_it;
         free_it = free_it->next;
         delete delem;
     }
     while (copy_iterator)
     {
-        it->next = new Node;
+        it->next = new Node<Type>;
         it = it->next; 
         it->data = copy_iterator->data;
         copy_iterator = copy_iterator->next;
@@ -82,7 +78,7 @@ FList<Type>& FList<Type>::operator=(const FList &copy)
 template<typename Type>
 FList<Type>& FList<Type>::push(const Type& elem)
 {
-    Node *new_elem = new Node;
+    Node<Type> *new_elem = new Node<Type>;
     new_elem->data = elem;
     new_elem->next = HEAD;
     HEAD = new_elem;
@@ -95,13 +91,14 @@ FList<Type>& FList<Type>::push(const Type& elem)
 // inserts before pos element
 template<typename Type>
 FList<Type>& FList<Type>::insert(const Type& elem, size_t pos)
-{    if (pos == 0)
+{
+    if (pos == 0)
         return push(elem);
-    Node *it = HEAD; // will iterate to prev element for new element
+    Node<Type> *it = HEAD; // will iterate to prev element for new element
     for (size_t i = 0; i < pos - 1; ++i)
         it = it->next;
-    Node *next_elem = it->next;
-    Node *new_elem = new Node;
+    Node<Type> *next_elem = it->next;
+    Node<Type> *new_elem = new Node<Type>;
     new_elem->data = elem;
     new_elem->next = next_elem;
     it->next = new_elem;
@@ -113,7 +110,7 @@ FList<Type>& FList<Type>::insert(const Type& elem, size_t pos)
 template<typename Type>
 Type FList<Type>::pop()
 {
-    Node *next = HEAD->next;
+    Node<Type> *next = HEAD->next;
     Type retval = HEAD->data;
     delete HEAD;
     HEAD = next;
@@ -126,11 +123,11 @@ Type FList<Type>::erase(size_t pos)
 {
     if (pos == 0)
         return pop();
-    Node *it = HEAD;
+    Node<Type> *it = HEAD;
     for (size_t i = 0; i < pos - 1; ++i)
         it = it->next;
-    Node *delem = it->next;
-    Node *after_delem = delem->next;
+    Node<Type> *delem = it->next;
+    Node<Type> *after_delem = delem->next;
     it->next = after_delem;
     Type retval = delem->data;
     delete delem;
@@ -148,7 +145,7 @@ void FList<Type>::free()
 template<typename Type>
 Type& FList<Type>::get(size_t pos)
 {
-    Node *it = HEAD;
+    Node<Type> *it = HEAD;
     for (int i = 0; i != pos; ++i)
         it = it->next;
     return it->data;
@@ -157,7 +154,7 @@ Type& FList<Type>::get(size_t pos)
 template<typename Type>
 void FList<Type>::stdout()
 {
-    Node *temp = HEAD;
+    Node<Type> *temp = HEAD;
     while (temp != NULL) {
         std::cout << temp->data << "\n";
         temp = temp->next;
