@@ -7,7 +7,6 @@
 
 template<typename Type>
 class BList {
-    
     BNode<Type> *HEAD = NULL;
     BNode<Type> *TAIL = NULL;
     size_t size = 0;
@@ -96,6 +95,7 @@ BList<Type>& BList<Type>::insert(const Type& elem, size_t pos)
     new_node->prev = el_after_new->prev; // link to [prev] for [new]
     el_after_new->prev->next = new_node; // for [prev] create link to [new]
     el_after_new->prev = new_node; // for [after] create link to [new]
+    ++size;
     return *this;
 }
 
@@ -164,6 +164,7 @@ Type BList<Type>::erase(size_t pos)
     delem->next->prev = delem->prev;
     Type retval = delem->data;
     delete delem;
+    --size;
     return retval;
 }
 
