@@ -10,12 +10,6 @@ class BList {
     BNode<Type> *HEAD = NULL;
     BNode<Type> *TAIL = NULL;
     size_t size = 0;
-    /*
-     * UB if pos is the other end of the list. Most likely to cause segfault
-     * Substitute with fetch element (from back and front)!
-     * Consider list as an array [0...n]
-     * fetch_from_any_direction(pos) will have to return pos element
-     */
     BNode<Type> *fetch_from_back(size_t pos);
     BNode<Type> *fetch_from_front(size_t pos);
 public:
