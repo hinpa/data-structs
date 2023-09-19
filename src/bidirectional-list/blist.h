@@ -10,7 +10,8 @@ class BList {
     BNode<Type> *HEAD = NULL;
     BNode<Type> *TAIL = NULL;
     size_t size = 0;
-    /* UB if pos is the other end of the list. Most likely to cause segfault
+    /*
+     * UB if pos is the other end of the list. Most likely to cause segfault
      * Substitute with fetch element (from back and front)!
      * Consider list as an array [0...n]
      * fetch_from_any_direction(pos) will have to return pos element
@@ -82,7 +83,7 @@ BList<Type>& BList<Type>::insert(const Type& elem, size_t pos)
         return push_back(elem);
     // is_second_half is true if pos lays between [n/2+1;n]
     bool is_second_half = pos > size / 2; 
-    BNode<Type> new_node;
+    BNode<Type> *new_node = new BNode<Type>;
     new_node->data = elem;
     BNode<Type> *el_after_new;
     if (is_second_half) 
